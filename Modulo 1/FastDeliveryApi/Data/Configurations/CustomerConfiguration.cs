@@ -30,7 +30,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         .IsRequired()
         .HasMaxLength(120);
 
-        builder.HasData(
+        /*builder.HasData(
             new Customer
             {
                 Id = 1,
@@ -49,6 +49,6 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
                 PhoneNumber = "8765-4321",
                 Status = true
             }
-        );
+        );*/
     }
 }

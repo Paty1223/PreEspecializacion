@@ -1,9 +1,14 @@
 using FastDeliveryApi.Data;
+using FastDeliveryApi.Repositories;
+using FastDeliveryApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
 var connectionString = builder.Configuration.GetConnectionString("MyDbPgsql");
 builder.Services.AddDbContext<FastDeliveryDbContext>(options => {
     options.UseNpgsql(connectionString);
