@@ -5,14 +5,15 @@ namespace FastDeliveryApi.Entity;
 
 public class Customer : IAuditableEntity
 {
-    public Customer(string name, string phoneNumber, string email, string address)
+    /*public Customer(string name, string phoneNumber, string email, string address)
     {
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
         Address = address;
         Status = true;
-    }
+    }*/
+    
     public int Id { get; set; }
     public string Name { get; private set; }
     public string PhoneNumber { get; private set; }

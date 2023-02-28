@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj": {}
+    "c:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj": {
+    "c:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj",
+        "projectUniqueName": "c:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj",
         "projectName": "FastDeliveryApi",
-        "projectPath": "C:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj",
+        "projectPath": "c:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\FastDeliveryApi.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\obj\\",
+        "outputPath": "c:\\Users\\PC\\Desktop\\Modulo 1\\FastDeliveryApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -25,8 +25,6 @@
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,6 +43,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Mapster": {
+              "target": "Package",
+              "version": "[7.3.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.2, )"
@@ -55,9 +57,17 @@
               "target": "Package",
               "version": "[7.0.1, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.2, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[7.0.1, )"
+            },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[4.2.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

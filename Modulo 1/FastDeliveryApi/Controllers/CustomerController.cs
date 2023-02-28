@@ -1,9 +1,10 @@
 namespace FastDeliveryApi.Controllers;
-
-using FastDeliveryApi.Data;
 using FastDeliveryApi.Entity;
+using FastDeliveryApi.Exceptions;
 using FastDeliveryApi.Models;
 using FastDeliveryApi.Repositories.Interfaces;
+
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -11,14 +12,15 @@ using Microsoft.AspNetCore.Mvc;
 public class CustomersControllers : ControllerBase
 {
     private readonly ICustomerRepository _customerRepository;
-    private readonly IUnitOfWork _unitOfWork;
+    
 
     public CustomersControllers(ICustomerRepository customerRepository, IUnitOfWork unitOfWork)
     {
         _customerRepository = customerRepository;
         _unitOfWork = unitOfWork;
     }
-    private readonly FastDeliveryDbContext _context;
+
+    private readonly IUnitOfWork _unitOfWork;
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Customer>>> Get()
@@ -30,21 +32,18 @@ public class CustomersControllers : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request, CancellationToken cancellationToken)
     {
-        var customer = new Customer(
-            request.Name,
-            request.PhoneNumber,
-            request.Email,
-            request.Address 
-        );
+        var customer = request.Adapt<Customer>();
 
         _customerRepository.Add(customer);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangeAsync(cancellationToken);
+
+        var response = customer.Adapt<CustomerResponse>();
 
         return CreatedAtAction(
             nameof(GetCustomerById),
-            new { id = customer.Id },
-            customer
+            new { id = response.Id },
+            response
         );
     }
 
@@ -53,13 +52,13 @@ public class CustomersControllers : ControllerBase
     {
         if (request.Id != id)
         {
-            return BadRequest("Body Id is not equal than Url Id");
+            throw new BadRequestException("Body Id is not equal than Url Id");
         }
 
         var customer = await _customerRepository.GetCustomerById(id);
         if (customer is null)
         {
-            return NotFound($"Customer Not Found With th Id {id}");
+            throw new NotFoundException("Customer", id);
         }
 
         customer.ChangeName(request.Name);
@@ -70,7 +69,7 @@ public class CustomersControllers : ControllerBase
 
         _customerRepository.Update(customer);
 
-        await _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangeAsync();
 
         return NoContent();
     }
@@ -78,12 +77,15 @@ public class CustomersControllers : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetCustomerById(int id, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetCustomerById(id);
+        var customer = await _customerRepository.GetCustomerById(id, cancellationToken);
         if (customer is null)
         {
-            return NotFound($"Customer Not Found With th Id {id}");
+            throw new NotFoundException("Customer", id);
         }
-        return Ok(customer);
+
+        var response = customer.Adapt<CustomerResponse>();
+
+        return Ok(response);
     }
 
 
